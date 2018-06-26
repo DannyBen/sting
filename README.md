@@ -1,6 +1,11 @@
 Sting - Minimal Settings Library
 ==================================================
 
+[![Gem Version](https://badge.fury.io/rb/sting.svg)](https://badge.fury.io/rb/sting)
+[![Build Status](https://travis-ci.com/DannyBen/sting.svg?branch=master)](https://travis-ci.com/DannyBen/sting)
+[![Maintainability](https://api.codeclimate.com/v1/badges/c8afe395a8f2cf290fec/maintainability)](https://codeclimate.com/github/DannyBen/sting/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/c8afe395a8f2cf290fec/test_coverage)](https://codeclimate.com/github/DannyBen/sting/test_coverage)
+
 ---
 
 Sting is a minimal, lightweight, multi-YAML settings library.
