@@ -1,0 +1,10 @@
+require "runfile-tasks"
+require "byebug"
+require_relative 'lib/sting'
+
+title   "Sting Developer Toolbelt"
+summary "Runfile tasks for building the Sting gem"
+version Sting::VERSION
+
+RunfileTasks::RubyGems.all 'sting'
+RunfileTasks::Testing.rspec
