@@ -6,8 +6,8 @@ class Sting
     def <<(path)
       path = "#{path}.yml" unless path =~ /\.ya?ml$/
       content = File.read path
-      content = YAML.load(ERB.new(content).result).to_hash
-      settings.merge! content
+      content = YAML.load(ERB.new(content).result)
+      settings.merge! content if content
     end
 
     def [](key)
