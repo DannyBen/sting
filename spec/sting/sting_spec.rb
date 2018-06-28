@@ -1,45 +1,84 @@
 require 'spec_helper'
 
 describe Sting do
-  before { Sting.reset! }
+  subject { described_class }
+
   let(:file1) { 'spec/fixtures/one' }
   let(:file2) { 'spec/fixtures/two' }
 
+  before { subject.reset!; subject << file1 }
+
   describe '<<' do
     it "loads a YAML file" do
-      Sting << file1
-      expect(Sting.some_key).to eq 'some_value'
+      expect(subject.some_key).to eq 'some_value'
     end
 
     it "merges additional files" do
-      Sting << file1
-      expect(Sting.filename).to eq 'one'      
-      Sting << file2
-      expect(Sting.filename).to eq 'two'
-      expect(Sting.some_key).to eq 'some_value'
+      expect(subject.filename).to eq 'one'      
+      subject << file2
+      expect(subject.filename).to eq 'two'
+      expect(subject.some_key).to eq 'some_value'
     end
   end
 
-  describe '[]' do
-    before { Sting << file1 }
-
+  describe 'method_missing' do
     it "returns a value" do
-      expect(Sting[:filename]).to eq Sting.filename      
+      expect(subject.filename).to eq 'one'
+    end
+  end
+
+  describe 'method_missing=' do
+    it "assigns a new value" do
+      subject.new_key = 'new value'
+      expect(subject.new_key).to eq 'new value'
+    end
+  end
+
+  describe 'method_missing?' do
+    context "when the key exists" do
+      it "returns true" do
+        expect(subject.filename?).to be true
+      end
+    end
+
+    context "when the key does not exists" do
+      it "returns false" do
+        expect(subject.nokey?).to be false
+      end
+    end
+  end
+
+  describe 'method_missing!' do
+    context "when the key exists" do
+      it "returns its value" do
+        expect(subject.filename!).to eq 'one'
+      end
+    end
+
+    context "when the key does not exists" do
+      it "raises ArgumentError" do
+        expect{ subject.nokey! }.to raise_error(ArgumentError)
+      end
+    end
+  end
+
+
+  describe '[]' do
+    it "returns a value" do
+      expect(subject[:filename]).to eq subject.filename      
     end
   end
 
   describe 'has_key?' do
-    before { Sting << file1 }
-
     context "when key exists" do
       it "returns true" do
-        expect(Sting.has_key? :filename).to be true
+        expect(subject.has_key? :filename).to be true
       end
     end
 
     context "when key does not exist" do
       it "returns false" do
-        expect(Sting.has_key? :no_key).to be false
+        expect(subject.has_key? :no_key).to be false
       end
     end
   end
