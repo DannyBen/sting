@@ -15,8 +15,37 @@ Sting is a minimal, lightweight, multi-YAML settings library.
 Installation
 --------------------------------------------------
 
-    $ gem install sting
+```shell
+$ gem install sting
+```
 
+
+Why was this made?
+--------------------------------------------------
+
+Sting was made to replace the Rails Config gem, which has an unreasonable 
+amount of dependencies (i.e. the dry-validation gem, its children and 
+grandchildren...).
+
+
+Features
+--------------------------------------------------
+
+- [Aggressively minimalistic][1], no dependencies, no monkey-patching, no magic.
+- Settings are accessible through a globally available class.
+- Load and merge one or more YAML files.
+- Settings objects are standard ruby hashes, arrays and basic types.
+- Ability to update settings at runtime.
+- ERB code in the YAML files will be evaluated.
+
+
+Nonfeatures
+--------------------------------------------------
+
+- No dot notation access to nested values - Use `Settings.server['host']` 
+  instead of `Settings.server.host` - to avoid having to monkey-patch hashes.
+- No special generators for Rails. 
+  [Usage with rails is still trivial](#using-with-rails).
 
 
 Usage
@@ -25,21 +54,71 @@ Usage
 ```ruby
 require 'sting'
 
-# If you want to use a different name than Sting
+# If you want to use a different name than Sting (optional)
 Settings = Sting
 
-# Load some YAML files
+# Load some YAML files. If the provided filename does end with '.yml' or 
+# '.yaml', we will add '.yml' to it.
 Settings << 'one'
 Settings << 'two'
 
 # Access values
-p Settings.hello
-p Settings['hello']
-p Settings[:hello]
+p Settings.host
+p Settings['host']
+p Settings[:host]
+
+# Access nested values
+p Settings.server['host']
 
 # Access all values
-p Settings.all
+p Settings.settings
 
 # Check if a key is defined
 p Settings.has_key? :hello
+
+# Access value, but raise an exception if it does not exist
+p Settings.host!
+
+# Access boolean values, or check if a key exists
+p Settings.host?
+
+# Update a value (in memory only, not in file)
+Settings.port = 3000
+
+# Reset (erase) all values
+Settings.reset!
 ```
+
+
+Using with Rails
+--------------------------------------------------
+
+You can use this however you wish in Rails. This is the recommended 
+implementation:
+
+Add sting to your Gemfile:
+
+```ruby
+gem 'sting'
+```
+
+Create an initializer:
+
+```ruby
+# config/initializers/settings.rb
+Settings = Sting
+
+# load default settings, and per-encironment settings as overrides
+Settings << "#{Rails.root}/config/settings"
+Settings << "#{Rails.root}/config/settings/#{Rails.env}"
+```
+
+Create four config files:
+
+- config/**settings**.yml
+- config/settings/**development**.yml
+- config/settings/**production**.yml
+- config/settings/**test**.yml
+
+
+[1]: https://github.com/DannyBen/sting/blob/master/lib/sting.rb
