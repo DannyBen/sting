@@ -107,8 +107,6 @@ Create an initializer:
 ```ruby
 # config/initializers/settings.rb
 Settings = Sting
-
-# load default settings, and per-encironment settings as overrides
 Settings << "#{Rails.root}/config/settings"
 Settings << "#{Rails.root}/config/settings/#{Rails.env}"
 ```
