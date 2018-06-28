@@ -14,8 +14,36 @@ class Sting
       settings[key.to_s]
     end
 
-    def method_missing(method, *_)
-      settings[method.to_s]
+    def method_missing(name, *args, &blk)
+      name = name.to_s
+      return settings[name] if has_key? name
+
+      suffix = nil
+
+      if name.end_with? *['=', '!', '?']
+        suffix = name[-1]
+        name = name[0..-2]
+      end
+
+      case suffix
+      when "="
+        settings[name] = args.first
+
+      when "?"
+        !!settings[name]
+
+      when "!"
+        if has_key? name
+          return settings[name]
+        else
+          raise ArgumentError, "Key '#{name}' does not exist"
+        end
+
+      else
+        nil
+
+      end
+
     end
 
     def settings
