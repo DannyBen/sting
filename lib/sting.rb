@@ -3,10 +3,14 @@ require 'erb'
 
 class Sting
   class << self
-    def <<(path)
-      path = "#{path}.yml" unless path =~ /\.ya?ml$/
-      content = File.read path
-      content = YAML.load(ERB.new(content).result)
+    def <<(source)
+      if source.is_a? Hash
+        content = source.transform_keys { |key| key.to_s }
+      else
+        source = "#{source}.yml" unless source =~ /\.ya?ml$/
+        content = File.read source
+        content = YAML.load(ERB.new(content).result)
+      end
       settings.merge! content if content
     end
 

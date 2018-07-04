@@ -33,7 +33,7 @@ Features
 
 - [Aggressively minimalistic][1], no dependencies, no monkey-patching, no magic.
 - Settings are accessible through a globally available class.
-- Load and merge one or more YAML files.
+- Load and merge one or more YAML files or hashes.
 - Settings objects are standard ruby hashes, arrays and basic types.
 - Ability to update settings at runtime.
 - ERB code in the YAML files will be evaluated.
@@ -60,7 +60,10 @@ Settings = Sting
 # Load some YAML files. If the provided filename does end with '.yml' or 
 # '.yaml', we will add '.yml' to it.
 Settings << 'one'
-Settings << 'two'
+Settings << 'two.yml'
+
+# Merge with another options hash
+Settings << { port: 3000, host: 'localhost' }
 
 # Access values
 p Settings.host
