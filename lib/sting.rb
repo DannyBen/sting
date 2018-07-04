@@ -5,7 +5,7 @@ class Sting
   class << self
     def <<(source)
       if source.is_a? Hash
-        content = source.transform_keys { |key| key.to_s }
+        content = source.collect{ |k,v| [k.to_s, v] }.to_h
       else
         source = "#{source}.yml" unless source =~ /\.ya?ml$/
         content = File.read source
