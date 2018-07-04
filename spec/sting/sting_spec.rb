@@ -9,15 +9,26 @@ describe Sting do
   before { subject.reset!; subject << file1 }
 
   describe '<<' do
-    it "loads a YAML file" do
-      expect(subject.some_key).to eq 'some_value'
+    context "with a string argument" do
+      it "loads a YAML file" do
+        expect(subject.some_key).to eq 'some_value'
+      end
+
+      it "merges additional files" do
+        expect(subject.filename).to eq 'one'      
+        subject << file2
+        expect(subject.filename).to eq 'two'
+        expect(subject.some_key).to eq 'some_value'
+      end
     end
 
-    it "merges additional files" do
-      expect(subject.filename).to eq 'one'      
-      subject << file2
-      expect(subject.filename).to eq 'two'
-      expect(subject.some_key).to eq 'some_value'
+    context "with a hash argument" do
+      it "merges the new keys" do
+        subject << { filename: 'two', another_key: 'another_value' }
+        expect(subject.filename).to eq 'two'
+        expect(subject.some_key).to eq 'some_value'
+        expect(subject.another_key).to eq 'another_value'
+      end
     end
   end
 
