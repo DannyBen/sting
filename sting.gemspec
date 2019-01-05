@@ -15,11 +15,4 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/dannyben/sting'
   s.license     = 'MIT'
   s.required_ruby_version = ">= 2.2.0"
-
-  s.add_development_dependency 'byebug', '~> 10.0'
-  s.add_development_dependency 'rspec', '~> 3.6'
-  s.add_development_dependency 'rspec_fixtures', '~> 0.3'
-  s.add_development_dependency 'runfile', '~> 0.10'
-  s.add_development_dependency 'runfile-tasks', '~> 0.4'
-  s.add_development_dependency 'simplecov', '~> 0.15'
 end
