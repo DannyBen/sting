@@ -1,12 +1,29 @@
 require 'spec_helper'
 
 describe Sting do
-  subject { described_class }
-
   let(:file1) { 'spec/fixtures/one' }
   let(:file2) { 'spec/fixtures/two' }
 
   before { subject.reset!; subject << file1 }
+
+  describe '#initialize' do
+    context "with a source argument" do
+      subject { described_class.new file1 }
+
+      it "adds the source" do
+        expect(subject.some_key).to eq 'some_value'
+      end
+    end
+
+    context "without a source argument" do
+      subject { described_class.new }
+      before { subject.reset! }
+
+      it "does not error" do
+        expect(subject.settings).to eq({})
+      end
+    end
+  end
 
   describe '<<' do
     context "with a string argument" do
