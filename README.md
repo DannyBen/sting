@@ -102,7 +102,7 @@ Settings.reset!
 
 ### Using as an instance
 
-All the above operations are also available to instances of Sting.
+All the above operations are also available to instances of `Sting`.
 
 ```ruby
 require 'sting'
