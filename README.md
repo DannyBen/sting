@@ -33,6 +33,7 @@ Features
 
 - [Aggressively minimalistic][1], no dependencies, no monkey-patching, no magic.
 - Settings are accessible through a globally available class.
+- Can be used either as a singleton class or as an instance.
 - Load and merge one or more YAML files or hashes.
 - Settings objects are standard ruby hashes, arrays and basic types.
 - Ability to update settings at runtime.
@@ -43,13 +44,15 @@ Nonfeatures
 --------------------------------------------------
 
 - No dot notation access to nested values - Use `Settings.server['host']` 
-  instead of `Settings.server.host` - to avoid having to monkey-patch hashes.
+  instead of `Settings.server.host`.
 - No special generators for Rails. 
   [Usage with rails is still trivial](#using-with-rails).
 
 
 Usage
 --------------------------------------------------
+
+### Using as a singleton class
 
 ```ruby
 require 'sting'
@@ -61,6 +64,11 @@ Settings = Sting
 # '.yaml', we will add '.yml' to it.
 Settings << 'one'
 Settings << 'two.yml'
+
+# Adding additional files can also be done with `#push`. These two are the 
+# same.
+Settings << 'one'
+Settings.push 'one'
 
 # Merge with another options hash
 Settings << { port: 3000, host: 'localhost' }
@@ -90,6 +98,23 @@ Settings.port = 3000
 
 # Reset (erase) all values
 Settings.reset!
+```
+
+### Using as an instance
+
+All the above operations are also available to instances of Sting.
+
+```ruby
+require 'sting'
+
+# Create an instance.
+config = Sting.new
+
+# Or, create an instance, and provide the first source file to it.
+config = Sting.new 'settings'
+
+# Load additional YAML files. 
+config << 'local_settings'
 ```
 
 
@@ -122,4 +147,4 @@ Create four config files:
 - config/settings/**test**.yml
 
 
-[1]: https://github.com/DannyBen/sting/blob/master/lib/sting.rb
+[1]: https://github.com/DannyBen/sting/blob/master/lib/sting/sting_operations.rb
