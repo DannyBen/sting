@@ -59,7 +59,7 @@ require 'sting'
 # If you want to use a different name than Sting (optional)
 Settings = Sting
 
-# Load some YAML files. If the provided filename does bit end with '.yml' or 
+# Load some YAML files. If the provided filename does not end with '.yml' or 
 # '.yaml', we will add '.yml' to it.
 Settings << 'one'
 Settings << 'two.yml'
