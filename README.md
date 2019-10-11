@@ -80,7 +80,11 @@ p Settings[:host]
 # Access nested values
 p Settings.server['host']
 
-# Access all values
+# Access nested values safely (get nil if any of keys does not exist)
+p Settings[:server, :host]
+p Settings[:server, :production, :host]
+
+# Get the hash of all values
 p Settings.settings
 
 # Check if a key is defined
