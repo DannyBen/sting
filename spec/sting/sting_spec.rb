@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Sting do
   let(:file1) { 'spec/fixtures/one' }
   let(:file2) { 'spec/fixtures/two' }
+  let(:file3) { 'spec/fixtures/three' }
 
   before { subject.reset!; subject << file1 }
 
@@ -49,6 +50,54 @@ describe Sting do
     end
   end
 
+  describe '[]' do
+    context "with a symbol" do
+      it "returns a value" do
+        expect(subject[:filename]).to eq subject.filename      
+      end
+    end
+
+    context "with a string" do
+      it "returns a value" do
+        expect(subject['filename']).to eq subject.filename      
+      end
+    end
+
+    context "with multiple symbols or strings" do
+      before { subject << file3 }
+      
+      it "returns a deep (dig) value" do
+        expect(subject[:some, :nested, :configuration]).to eq 'works'
+      end
+
+      context "when the nested value does not exist" do
+        it "returns nil" do
+          expect(subject[:some, :broken, :configuration]).to be nil
+        end
+      end
+    end
+
+    context "when the value does not exist" do
+      it "returns nil" do
+        expect(subject['no-such-key']).to be nil
+      end
+    end
+  end
+
+  describe 'has_key?' do
+    context "when key exists" do
+      it "returns true" do
+        expect(subject.has_key? :filename).to be true
+      end
+    end
+
+    context "when key does not exist" do
+      it "returns false" do
+        expect(subject.has_key? :no_key).to be false
+      end
+    end
+  end
+
   describe 'method_missing' do
     it "returns a value" do
       expect(subject.filename).to eq 'one'
@@ -86,27 +135,6 @@ describe Sting do
     context "when the key does not exists" do
       it "raises ArgumentError" do
         expect{ subject.nokey! }.to raise_error(ArgumentError)
-      end
-    end
-  end
-
-
-  describe '[]' do
-    it "returns a value" do
-      expect(subject[:filename]).to eq subject.filename      
-    end
-  end
-
-  describe 'has_key?' do
-    context "when key exists" do
-      it "returns true" do
-        expect(subject.has_key? :filename).to be true
-      end
-    end
-
-    context "when key does not exist" do
-      it "returns false" do
-        expect(subject.has_key? :no_key).to be false
       end
     end
   end

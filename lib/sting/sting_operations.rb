@@ -19,8 +19,8 @@ class Sting
     end
     alias_method :push, :<<
 
-    def [](key)
-      settings[key.to_s]
+    def [](*keys)
+      settings.dig *keys.map(&:to_s)
     end
 
     def method_missing(name, *args, &blk)
