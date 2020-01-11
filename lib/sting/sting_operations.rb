@@ -20,7 +20,7 @@ class Sting
     alias_method :push, :<<
 
     def [](*keys)
-      settings.dig *keys.map(&:to_s)
+      settings.dig(*keys.map(&:to_s))
     end
 
     def method_missing(name, *args, &blk)
@@ -29,7 +29,7 @@ class Sting
 
       suffix = nil
 
-      if name.end_with? *['=', '!', '?']
+      if name.end_with?('=', '!', '?')
         suffix = name[-1]
         name = name[0..-2]
       end
