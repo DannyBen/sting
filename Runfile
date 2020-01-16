@@ -8,3 +8,5 @@ version Sting::VERSION
 
 RunfileTasks::RubyGems.all 'sting'
 RunfileTasks::Testing.rspec
+
+require_relative 'debug' if File.exist? 'debug.rb'

@@ -1,0 +1,13 @@
+--- !ruby/object:Sting
+settings:
+  grand_parent: true
+  settings:
+    grandparent: true
+    parent: true
+    child: true
+  array:
+  - grandparent
+  - parent
+  - child
+  parent: true
+  child: true

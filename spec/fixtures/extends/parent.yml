@@ -1,0 +1,9 @@
+extends: grandparent
+
+parent: true
+
+settings:
+  parent: true
+
+array:
+  - parent

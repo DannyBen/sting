@@ -1,7 +1,8 @@
-/tmp
-/spec/tmp
-/coverage
-/dev
-/gems
-/Gemfile.lock
 *.gem
+/coverage
+/debug.rb
+/dev
+/Gemfile.lock
+/gems
+/spec/tmp
+/tmp

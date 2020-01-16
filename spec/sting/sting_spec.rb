@@ -5,19 +5,16 @@ describe Sting do
   let(:file2) { 'spec/fixtures/two' }
   let(:file3) { 'spec/fixtures/three' }
 
-  before { subject.reset!; subject << file1 }
+  subject { described_class.new file1 }
 
   describe '#initialize' do
     context "with a source argument" do
-      subject { described_class.new file1 }
-
       it "adds the source" do
         expect(subject.some_key).to eq 'some_value'
       end
     end
 
     context "without a source argument" do
-      subject { described_class.new }
       before { subject.reset! }
 
       it "does not error" do
@@ -98,6 +95,18 @@ describe Sting do
     end
   end
 
+  describe 'settings' do
+    it "returns theh entire settings hash" do
+      expect(subject.settings).to eq({"filename"=>"one", "some_key"=>"some_value"})
+    end
+  end
+
+  describe 'to_h' do
+    it "returns theh entire settings hash" do
+      expect(subject.to_h).to eq({"filename"=>"one", "some_key"=>"some_value"})
+    end
+  end
+
   describe 'method_missing' do
     it "returns a value" do
       expect(subject.filename).to eq 'one'
@@ -136,6 +145,14 @@ describe Sting do
       it "raises ArgumentError" do
         expect{ subject.nokey! }.to raise_error(ArgumentError)
       end
+    end
+  end
+
+  context "when using ExtendedYAML#extends" do
+    subject { described_class.new 'spec/fixtures/extends/child.yml' }
+
+    it "extends the other files" do
+      expect(subject.to_yaml).to match_fixture('extends')
     end
   end
 end

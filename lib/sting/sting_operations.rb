@@ -1,5 +1,4 @@
-require 'yaml'
-require 'erb'
+require 'extended_yaml'
 
 class Sting
   module StingOperations
@@ -12,8 +11,7 @@ class Sting
         content = source.collect{ |k,v| [k.to_s, v] }.to_h
       else
         source = "#{source}.yml" unless source =~ /\.ya?ml$/
-        content = File.read source
-        content = YAML.load(ERB.new(content).result)
+        content = ExtendedYAML.load source
       end
       settings.merge! content if content
     end
@@ -58,6 +56,7 @@ class Sting
     def settings
       @settings ||= {}
     end
+    alias to_h settings
 
     def reset!
       @settings = nil
