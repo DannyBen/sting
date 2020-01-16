@@ -1,0 +1,7 @@
+grand_parent: true
+
+settings:
+  grandparent: true
+
+array:
+  - grandparent

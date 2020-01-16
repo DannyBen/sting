@@ -1,0 +1,9 @@
+extends: parent
+
+child: true
+
+settings:
+  child: true
+
+array:
+  - child

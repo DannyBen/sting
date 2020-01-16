@@ -15,4 +15,6 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/dannyben/sting'
   s.license     = 'MIT'
   s.required_ruby_version = ">= 2.2.0"
+
+  s.add_runtime_dependency "extended_yaml", '~> 0.2'
 end
