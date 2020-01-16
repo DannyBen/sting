@@ -19,23 +19,16 @@ $ gem install sting
 ```
 
 
-Why was this made?
---------------------------------------------------
-
-Sting was made to replace the Rails Config gem, which has an unreasonable 
-amount of dependencies (i.e. the dry-validation gem, its children and 
-grandchildren...).
-
-
 Features
 --------------------------------------------------
 
-- [Aggressively minimalistic][1], no dependencies, no monkey-patching, no magic.
+- [Aggressively minimalistic][1].
 - Settings are accessible through a globally available class.
 - Can be used either as a singleton class or as an instance.
 - Load and merge one or more YAML files or hashes.
 - Settings objects are standard ruby hashes, arrays and basic types.
 - Ability to update settings at runtime.
+- [Ability to extend](#extending-yaml-files) (import) other YAML files.
 - ERB code in the YAML files will be evaluated.
 
 
@@ -121,6 +114,22 @@ config << 'local_settings'
 ```
 
 
+### Extending YAML files
+
+Sting uses [ExtendedYAML], which means you can use the `extends` key to load
+one ormore YAML files into your loaded configuration files:
+
+```yaml
+# Extend a single file (extension is optional)
+extends: some-other-file.yml
+
+# Extend multiple files
+extends:
+- some-file
+- another-file
+```
+
+
 Using with Rails
 --------------------------------------------------
 
@@ -151,3 +160,4 @@ Create four config files:
 
 
 [1]: https://github.com/DannyBen/sting/blob/master/lib/sting/sting_operations.rb
+[2]: https://github.com/DannyBen/extended_yaml

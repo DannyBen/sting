@@ -16,5 +16,5 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
   s.required_ruby_version = ">= 2.2.0"
 
-  s.add_runtime_dependency "extended_yaml", '~> 0.1'
+  s.add_runtime_dependency "extended_yaml", '~> 0.2'
 end
