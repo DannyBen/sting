@@ -152,7 +152,7 @@ describe Sting do
     subject { described_class.new 'spec/fixtures/extends/child.yml' }
 
     it "extends the other files" do
-      expect(subject.to_yaml).to match_fixture('extends')
+      expect(subject.to_yaml).to match_approval('extends')
     end
   end
 end
