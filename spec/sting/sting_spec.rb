@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Sting do
+  let(:dir)   { 'spec/fixtures' }
   let(:file1) { 'spec/fixtures/one' }
   let(:file2) { 'spec/fixtures/two' }
   let(:file3) { 'spec/fixtures/three' }
@@ -24,7 +25,7 @@ describe Sting do
   end
 
   describe '<<' do
-    context "with a string argument" do
+    context "with a string filename argument" do
       it "loads a YAML file" do
         expect(subject.some_key).to eq 'some_value'
       end
@@ -34,6 +35,27 @@ describe Sting do
         subject << file2
         expect(subject.filename).to eq 'two'
         expect(subject.some_key).to eq 'some_value'
+      end
+    end
+
+    context "with a string directory argument" do
+      subject { described_class.new }
+
+      it "loads all direct YAML files from the directory" do
+        subject << dir
+        expect(subject.filename).to eq 'two'
+        expect(subject.some_key).to eq 'some_value'
+      end
+    end
+
+    context "with a string directory argument that has a glob" do
+      subject { described_class.new }
+
+      it "loads all YAML files from the directory recursively" do
+        subject << "#{dir}/**/*.yml"
+        expect(subject.filename).to eq 'two'
+        expect(subject.some_key).to eq 'some_value'
+        expect(subject.grand_parent).to be true
       end
     end
 
