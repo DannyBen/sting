@@ -1,5 +1,4 @@
-Sting - Minimal Settings Library
-==================================================
+# Sting - Minimal Settings Library
 
 [![Gem Version](https://badge.fury.io/rb/sting.svg)](https://badge.fury.io/rb/sting)
 [![Build Status](https://github.com/DannyBen/sting/workflows/Test/badge.svg)](https://github.com/DannyBen/sting/actions?query=workflow%3ATest)
@@ -11,16 +10,14 @@ Sting is a minimal, lightweight, multi-YAML settings library.
 
 ---
 
-Installation
---------------------------------------------------
+## Installation
 
 ```shell
 $ gem install sting
 ```
 
 
-Features
---------------------------------------------------
+## Features
 
 - [Aggressively minimalistic][1].
 - Settings are accessible through a globally available class.
@@ -32,17 +29,14 @@ Features
 - ERB code in the YAML files will be evaluated.
 
 
-Nonfeatures
---------------------------------------------------
+## Nonfeatures
 
-- No dot notation access to nested values - Use `Settings.server['host']` 
-  instead of `Settings.server.host`.
+- No dot notation access to nested values - Use `Settings.server['host']`  instead of `Settings.server.host`.
 - No special generators for Rails. 
   [Usage with rails is still trivial](#using-with-rails).
 
 
-Usage
---------------------------------------------------
+## Usage
 
 ### Using as a singleton class
 
@@ -64,6 +58,12 @@ Settings.push 'one'
 
 # Merge with another options hash
 Settings << { port: 3000, host: 'localhost' }
+
+# Load all files from a directory
+Settings << "dir/that-contains/yamls"
+
+# Load all files from a directory, recursively
+Settings << "dir/that-contains/yamls/**/*.yml"
 
 # Access values
 p Settings.host
@@ -130,8 +130,7 @@ extends:
 ```
 
 
-Using with Rails
---------------------------------------------------
+## Using with Rails
 
 You can use this however you wish in Rails. This is the recommended 
 implementation:
