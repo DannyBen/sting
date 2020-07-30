@@ -9,10 +9,18 @@ class Sting
     def <<(source)
       if source.is_a? Hash
         content = source.collect{ |k,v| [k.to_s, v] }.to_h
+
+      elsif source.include? '*'
+        Dir["#{source}"].each { |file| push file }
+
+      elsif File.directory? source
+        Dir["#{source}/*.yml"].each { |file| push file }
+
       else
         source = "#{source}.yml" unless source =~ /\.ya?ml$/
         content = ExtendedYAML.load source
       end
+
       settings.merge! content if content
     end
     alias_method :push, :<<
