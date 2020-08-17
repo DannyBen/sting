@@ -11,7 +11,7 @@ class Sting
         content = source.collect{ |k,v| [k.to_s, v] }.to_h
 
       elsif source.include? '*'
-        Dir["#{source}"].each { |file| push file }
+        Dir["#{source}"].sort.each { |file| push file }
 
       elsif File.directory? source
         Dir["#{source}/*.yml"].sort.each { |file| push file }
