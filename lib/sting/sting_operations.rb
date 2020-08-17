@@ -14,7 +14,7 @@ class Sting
         Dir["#{source}"].each { |file| push file }
 
       elsif File.directory? source
-        Dir["#{source}/*.yml"].each { |file| push file }
+        Dir["#{source}/*.yml"].sort.each { |file| push file }
 
       else
         source = "#{source}.yml" unless source =~ /\.ya?ml$/
