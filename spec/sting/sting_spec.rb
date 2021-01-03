@@ -96,7 +96,7 @@ describe Sting do
       end
     end
 
-    context "when the value does not exist" do
+    context "when the key does not exist" do
       it "returns nil" do
         expect(subject['no-such-key']).to be nil
       end
@@ -132,6 +132,12 @@ describe Sting do
   describe 'method_missing' do
     it "returns a value" do
       expect(subject.filename).to eq 'one'
+    end
+
+    context "when the key does not exist" do
+      it "returns nil" do
+        expect(subject.not_found).to be_nil
+      end
     end
   end
 
