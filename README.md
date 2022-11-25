@@ -117,7 +117,7 @@ config << 'local_settings'
 ### Extending YAML files
 
 Sting uses [ExtendedYAML][2], which means you can use the `extends` key to load
-one ormore YAML files into your loaded configuration files:
+one or more YAML files into your loaded configuration files:
 
 ```yaml
 # Extend a single file (extension is optional)
