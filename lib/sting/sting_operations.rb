@@ -8,28 +8,28 @@ class Sting
 
     def <<(source)
       if source.is_a? Hash
-        content = source.collect{ |k,v| [k.to_s, v] }.to_h
+        content = source.transform_keys(&:to_s)
 
       elsif source.include? '*'
-        Dir["#{source}"].sort.each { |file| push file }
+        Dir[source.to_s].sort.each { |file| push file }
 
       elsif File.directory? source
         Dir["#{source}/*.yml"].sort.each { |file| push file }
 
       else
-        source = "#{source}.yml" unless source =~ /\.ya?ml$/
+        source = "#{source}.yml" unless /\.ya?ml$/.match?(source)
         content = ExtendedYAML.load source
       end
 
       settings.merge! content if content
     end
-    alias_method :push, :<<
+    alias push <<
 
     def [](*keys)
       settings.dig(*keys.map(&:to_s))
     end
 
-    def method_missing(name, *args, &blk)
+    def method_missing(name, *args, &_block)
       name = name.to_s
       return settings[name] if has_key? name
 
@@ -41,24 +41,18 @@ class Sting
       end
 
       case suffix
-      when "="
+      when '='
         settings[name] = args.first
 
-      when "?"
+      when '?'
         !!settings[name]
 
-      when "!"
-        if has_key? name
-          return settings[name]
-        else
-          raise ArgumentError, "Key '#{name}' does not exist"
-        end
+      when '!'
+        raise ArgumentError, "Key '#{name}' does not exist" unless has_key? name
 
-      else
-        nil
+        settings[name]
 
       end
-
     end
 
     def settings

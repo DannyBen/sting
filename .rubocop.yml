@@ -1,0 +1,15 @@
+require:
+  - rubocop-performance
+  - rubocop-rspec
+
+inherit_gem:
+  rentacop:
+    - rentacop.yml
+    - rspec.yml
+
+AllCops:
+  TargetRubyVersion: 2.6
+
+# Defining `respond_to_missing?` with `true` breaks specs
+Style/MissingRespondToMissing:
+  Enabled: false
