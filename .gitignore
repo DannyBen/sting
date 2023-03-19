@@ -1,6 +1,6 @@
 *.gem
 /coverage
-/debug.rb
+/debug.runfile
 /dev
 /Gemfile.lock
 /gems
