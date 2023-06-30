@@ -11,10 +11,10 @@ class Sting
         content = source.transform_keys(&:to_s)
 
       elsif source.include? '*'
-        Dir[source.to_s].sort.each { |file| push file }
+        Dir[source.to_s].each { |file| push file }
 
       elsif File.directory? source
-        Dir["#{source}/*.yml"].sort.each { |file| push file }
+        Dir["#{source}/*.yml"].each { |file| push file }
 
       else
         source = "#{source}.yml" unless /\.ya?ml$/.match?(source)
