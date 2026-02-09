@@ -1,5 +1,7 @@
 # Sting - Minimal Settings Library
 
+![repocard](https://repocard.dannyben.com/svg/sting.svg)
+
 Sting is a minimal, lightweight, multi-YAML settings library.
 
 ## Installation
